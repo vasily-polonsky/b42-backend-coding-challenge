@@ -1,0 +1,83 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type FinishedWorkoutModel {
+  workoutId: String!
+  finishedAt: Float!
+}
+
+type RatingModel {
+  value: Float!
+  ratesCount: Int!
+}
+
+type Exercise {
+  name: String!
+  repetitions: Int!
+}
+
+type WorkoutModel {
+  id: String!
+  name: String!
+  exercises: [Exercise!]!
+  rating: RatingModel
+}
+
+type Query {
+  user: UserType!
+  workouts: [WorkoutModel!]!
+}
+
+union UserType = UserModel | ErrorModel
+
+type UserModel {
+  id: String!
+  name: String
+  email: String!
+  password: String!
+  profileImage: String!
+  finishedWorkouts: [WorkoutModel!]!
+}
+
+type ErrorModel {
+  message: String!
+}
+
+type Mutation {
+  createUser(data: CreateUserInput!): TokenType!
+  createWorkout(data: CreateWorkoutInput!): WorkoutType!
+  rateWorkout(data: RateWorkoutInput!): RatingType!
+  finishWorkout(id: String!): WorkoutType!
+}
+
+union TokenType = TokenModel | ErrorModel
+
+type TokenModel {
+  access_token: String!
+}
+
+input CreateUserInput {
+  name: String
+  password: String!
+  email: String!
+}
+
+union WorkoutType = WorkoutModel | ErrorModel
+
+input CreateWorkoutInput {
+  name: String!
+  exercises: [ExerciseInput!]!
+}
+
+input ExerciseInput {
+  name: String!
+  repetitions: Int!
+}
+
+union RatingType = RatingModel | ErrorModel
+
+input RateWorkoutInput {
+  id: String!
+  rating: Int!
+}
